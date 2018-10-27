@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <style>
+        .map {
+            width: 800px;
+            height: 600px;
+            background-color: #ccc;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+<div class="map"></div>
+<script>
+    //获取随机数对象
+    (function(window) {
+        function Random() {
+
+        };
+        Random.prototype.getRandom = function(max, min) {
+            return Math.floor(Math.random() * (max - min) + min);
+        };
+        window.random = new Random();
+    })(window);
+
+    //测试代码
+    // console.log(random.getRandom(10,20));
+
+    (function() {
+        //创建食物对象
+        var elements = [];
+        var map = document.querySelector(".map");
+
+        function Food(width, height, color) {
+            this.width = width || 20;
+            this.height = height || 20;
+            this.color = color || "green";
+            this.x = 0;
+            this.y = 0;
+        }
+        //为食物添加初始化方法
+        //因为食物需要在地图上显示 所以需要传入地图 map 参数
+        Food.prototype.init = function(map) {
+            var div = document.createElement("div");
+            elements.push(div);
+            map.appendChild(div);
+            div.style.width = this.width + "px";
+            div.style.height = this.height + "px";
+            div.style.backgroundColor = this.color;
+            div.style.position = 'absolute';
+            this.render(map);
+        };
+        Food.prototype.render = function(map){
+            this.x=random.getRandom(0,map.offsetWidth/this.width)*this.width;
+            this.y=random.getRandom(0,map.offsetHeight/this.height)*this.height;
+            console.log(this.x);
+            var div = elements.pop();
+            div.style.left=this.x+"px";
+            div.style.top=this.y+"px";
+        };
+        //要学会排错 缩小问题范围
+        var tc= new Food();
+        tc.init(map);
+
+
+
+
+
+    })();
+</script>
+
+
+</body>
+
+</html>
